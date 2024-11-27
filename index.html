@@ -97,7 +97,16 @@
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // 데이터베이스 초기화 함수 제거 (데이터를 유지하도록 수정)
+        // Firebase 연결 확인 함수
+        function checkFirebaseConnection() {
+            database.ref('.info/connected').on('value', (snapshot) => {
+                if (snapshot.val() === true) {
+                    console.log("Firebase에 성공적으로 연결되었습니다.");
+                } else {
+                    console.error("Firebase 연결 실패.");
+                }
+            });
+        }
 
         // 데이터베이스에서 로그인 상태 읽기 예시
         function checkLoginStatus() {
@@ -135,8 +144,9 @@
                 });
         }
 
-        // 페이지가 로드될 때 로그인 상태 및 채팅 목록 로드
+        // 페이지가 로드될 때 Firebase 연결 확인, 로그인 상태 및 채팅 목록 로드
         window.onload = () => {
+            checkFirebaseConnection();
             checkLoginStatus();
             loadChatList();
         };
