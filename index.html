@@ -97,6 +97,8 @@
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
+        // 데이터베이스 초기화 함수 제거 (데이터를 유지하도록 수정)
+
         // 데이터베이스에서 로그인 상태 읽기 예시
         function checkLoginStatus() {
             database.ref('users/user1').once('value')
@@ -114,9 +116,6 @@
                     console.error("로그인 상태 확인 중 오류 발생:", error);
                 });
         }
-
-        // 페이지가 로드될 때 로그인 상태 확인
-        window.onload = checkLoginStatus;
 
         // 채팅 목록을 Firebase에서 동적으로 로드
         function loadChatList() {
@@ -136,7 +135,7 @@
                 });
         }
 
-        // 페이지가 로드될 때 채팅 목록 로드
+        // 페이지가 로드될 때 로그인 상태 및 채팅 목록 로드
         window.onload = () => {
             checkLoginStatus();
             loadChatList();
