@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>발견 게시물</title>
     <link rel="stylesheet" href="assets/css/findList.css">
+    <!-- Firebase SDK 추가 -->
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <!-- 헤더 -->
@@ -37,13 +40,12 @@
     <main>
         <h1>발견 게시물</h1>
 
-    <!-- 게시글 작성 버튼 -->
-    <div class="post-create">
-        <a href="findWrite.html">
-            <button id="post-create-button">게시글 작성</button>
-        </a>
-    </div>
-
+        <!-- 게시글 작성 버튼 -->
+        <div class="post-create">
+            <a href="findWrite.html">
+                <button id="post-create-button">게시글 작성</button>
+            </a>
+        </div>
 
         <!-- 게시물 검색 영역 -->
         <div class="search-bar">
@@ -62,14 +64,14 @@
                         <th>작성일</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="post-list">
                     <!-- 게시물이 생성되면 여기에 추가됩니다 -->
                 </tbody>
             </table>
         </div>
 
         <!-- 게시물이 없을 때 안내 메시지 -->
-        <div class="no-posts">
+        <div class="no-posts" id="no-posts-message">
             <p>작성된 게시물이 없습니다.</p>
         </div>
     </main>
@@ -82,7 +84,6 @@
         </div>
         <p id="no-chat-message">채팅 내역이 없습니다.</p>
     </aside>
-    
 
     <!-- 푸터 -->
     <footer>
@@ -93,6 +94,58 @@
         <p>© 2024 발자국 탐정</p>
     </footer>
 
-    <script src="assets/js/findList.js"></script>
+    <script>
+        // Firebase 초기화 설정
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Firebase 초기화
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // 게시물 데이터를 Firebase에서 불러오기
+        function loadPosts() {
+            const postListElement = document.getElementById('post-list');
+            const noPostsMessage = document.getElementById('no-posts-message');
+
+            database.ref('posts').once('value')
+                .then((snapshot) => {
+                    const posts = snapshot.val();
+                    postListElement.innerHTML = '';
+                    let postIndex = 1;
+
+                    if (posts) {
+                        noPostsMessage.style.display = 'none';
+                        for (let key in posts) {
+                            const post = posts[key];
+                            const row = document.createElement('tr');
+
+                            row.innerHTML = `
+                                <td>${postIndex++}</td>
+                                <td>${post.title}</td>
+                                <td>${post.author}</td>
+                                <td>${post.date}</td>
+                            `;
+                            postListElement.appendChild(row);
+                        }
+                    } else {
+                        noPostsMessage.style.display = 'block';
+                    }
+                })
+                .catch((error) => {
+                    console.error("게시물 불러오기 중 오류 발생:", error);
+                });
+        }
+
+        // 페이지가 로드될 때 게시물 로드
+        window.onload = loadPosts;
+    </script>
 </body>
 </html>
