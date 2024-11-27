@@ -10,6 +10,9 @@
     <script src="assets/js/language_index.js" defer></script>
     <script src="assets/js/user_session.js" defer></script>
     <script src="assets/js/logout.js" defer></script>
+    <!-- Firebase SDK 추가 -->
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js"></script>
 </head>
 <body>
     <div class="container">
@@ -50,7 +53,7 @@
         <!-- 우측 섹션 -->
         <aside class="right-section">
             <!-- 비로그인 상태 UI -->
-             <div id="logged-out-ui">
+            <div id="logged-out-ui">
                 <div class="auth-text">
                     <a href="login.html">로그인</a> | <a href="signup.html">회원가입</a>
                 </div>
@@ -64,19 +67,80 @@
                 </div>
             </div>
             <!-- 로그인 상태 UI -->
-             <div id="logged-in-ui" style="display: none;">
+            <div id="logged-in-ui" style="display: none;">
                 <div class="auth-text">
                     <a href="mypage.html">마이페이지</a> | <a href="#" id="logout">로그아웃</a>
                 </div>
                 <div class="chat">
                     <h2>채팅</h2>
-                    <ul>
-                        <li>멍멍이</li>
-                        <li>냥이</li>
+                    <ul id="chat-list">
+                        <!-- 채팅 목록이 동적으로 추가될 예정 -->
                     </ul>
                 </div>
             </div>
         </aside>
     </div>
+
+    <script>
+        // Firebase 초기화 설정
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Firebase 초기화
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // 데이터베이스에서 로그인 상태 읽기 예시
+        function checkLoginStatus() {
+            database.ref('users/user1').once('value')
+                .then((snapshot) => {
+                    const data = snapshot.val();
+                    if (data && data.loggedIn) {
+                        document.getElementById('logged-out-ui').style.display = 'none';
+                        document.getElementById('logged-in-ui').style.display = 'block';
+                    } else {
+                        document.getElementById('logged-out-ui').style.display = 'block';
+                        document.getElementById('logged-in-ui').style.display = 'none';
+                    }
+                })
+                .catch((error) => {
+                    console.error("로그인 상태 확인 중 오류 발생:", error);
+                });
+        }
+
+        // 페이지가 로드될 때 로그인 상태 확인
+        window.onload = checkLoginStatus;
+
+        // 채팅 목록을 Firebase에서 동적으로 로드
+        function loadChatList() {
+            database.ref('chats').once('value')
+                .then((snapshot) => {
+                    const chatList = snapshot.val();
+                    const chatListElement = document.getElementById('chat-list');
+                    chatListElement.innerHTML = '';
+                    for (let key in chatList) {
+                        const li = document.createElement('li');
+                        li.textContent = chatList[key].name;
+                        chatListElement.appendChild(li);
+                    }
+                })
+                .catch((error) => {
+                    console.error("채팅 목록 불러오기 중 오류 발생:", error);
+                });
+        }
+
+        // 페이지가 로드될 때 채팅 목록 로드
+        window.onload = () => {
+            checkLoginStatus();
+            loadChatList();
+        };
+    </script>
 </body>
 </html>
