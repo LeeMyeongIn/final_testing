@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동물병원</title>
+    <link rel="stylesheet" href="assets/css/vetList.css">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/img/logo.png" alt="로고">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="lostList.html" data-translate="header-lost">
+                        <img src="assets/img/lost.png" alt="Lost">
+                        실종
+                    </a>
+                </li>
+                <li>
+                    <a href="findList.html" data-translate="header-found">
+                        <img src="assets/img/find.png" alt="Found">
+                        발견
+                    </a>
+                </li>
+                <li>
+                    <a href="protectList.html" data-translate="header-protect">
+                        <img src="assets/img/protect.png" alt="Temporary Protection">
+                        임시보호
+                    </a>
+                </li>
+                <li>
+                    <a href="vetList.html" data-translate="header-vet">
+                        <img src="assets/img/vet.png" alt="Veterinary Clinic">
+                        실종
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="auth">
+            <span class="logged-out">
+                <a href="login.html" data-translate="login">로그인</a> | <a href="signup.html" data-translate="signup">회원가입</a>
+            </span>
+            <span class="logged-in" style="display: none;">
+                <a href="logout.html" data-translate="logout">로그아웃</a> | <a href="mypage.html" data-translate="mypage">마이페이지</a>
+            </span>
+        </div>        
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main>
+        <!-- 구/군 및 동 선택 -->
+        <div id="location-selector">
+            <select id="region-select">
+                <option value="">구/군 선택</option>
+        </div>
+    
+        <!-- 병원 테이블 -->
+        <div class="post-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>병원 이름</th>
+                        <th>주소</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 병원 데이터가 동적으로 추가됩니다 -->
+                </tbody>
+            </table>
+        </div>        
+    </main>
+    
+     <!-- 채팅 섹션 -->
+     <aside class="chat-section">
+        <h2>채팅</h2>
+        <div id="chat-messages">
+            <!-- 채팅 메시지가 동적으로 추가되는 영역 -->
+        </div>
+        <p id="no-chat-message">채팅 내역이 없습니다.</p>
+    </aside>
+    
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="language-switch">
+            <button id="btn-ko" class="lang-btn active">한국어</button>
+            <button id="btn-en" class="lang-btn">ENGLISH</button>
+        </div>
+        <p>© 2024 발자국 탐정</p>
+    </footer>
+    <script src="assets/js/vetList.js"></script>
+</body>
+</html>

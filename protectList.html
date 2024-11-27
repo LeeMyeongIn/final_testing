@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>임시보호 게시물</title>
+    <link rel="stylesheet" href="assets/css/postList.css">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header>
+        <div class="logo">
+            <!-- 로고 클릭 시 메인 화면으로 이동 -->
+            <a href="index.html">
+                <img src="assets/img/logo.png" alt="로고">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="lostList.html"><img src="assets/img/lost.png" alt="실종"> 실종</a></li>
+                <li><a href="findList.html"><img src="assets/img/find.png" alt="발견"> 발견</a></li>
+                <li><a href="protectList.html"><img src="assets/img/protect.png" alt="임시보호"> 임시보호</a></li>
+                <li><a href="vetList.html"><img src="assets/img/vet.png" alt="동물병원"> 동물병원</a></li>
+            </ul>
+        </nav>
+        <div class="auth">
+            <span class="logged-out">
+                <a href="login.html">로그인</a> | <a href="signup.html">회원가입</a>
+            </span>
+            <span class="logged-in" style="display: none;">
+                <a href="logout.html">로그아웃</a> | <a href="mypage.html">마이페이지</a>
+            </span>
+        </div>
+    </header>
+
+    <!-- 메인 컨텐츠 -->
+    <main>
+        <h1>임시보호 게시물</h1>
+
+    <!-- 게시글 작성 버튼 -->
+    <div class="post-create">
+        <a href="protectWrite.html">
+            <button id="post-create-button">게시글 작성</button>
+        </a>
+    </div>
+
+
+        <!-- 게시물 검색 영역 -->
+        <div class="search-bar">
+            <input type="text" placeholder="게시물을 검색하세요...">
+            <button><img src="assets/img/search-icon.png" alt="돋보기"></button>
+        </div>
+
+        <!-- 게시물 테이블 헤더 -->
+        <div class="post-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 게시물이 생성되면 여기에 추가됩니다 -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 게시물이 없을 때 안내 메시지 -->
+        <div class="no-posts">
+            <p>작성된 게시물이 없습니다.</p>
+        </div>
+    </main>
+
+    <!-- 채팅 섹션 -->
+    <aside class="chat-section">
+        <h2>채팅</h2>
+        <div id="chat-messages">
+            <!-- 채팅 메시지가 동적으로 추가되는 영역 -->
+        </div>
+        <p id="no-chat-message">채팅 내역이 없습니다.</p>
+    </aside>
+    
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="language-switch">
+            <button id="btn-ko" class="lang-btn active">한국어</button>
+            <button id="btn-en" class="lang-btn">ENGLISH</button>
+        </div>
+        <p>© 2024 발자국 탐정</p>
+    </footer>      
+    <script src="assets/js/protectList.js"></script>
+</body>
+</html>
