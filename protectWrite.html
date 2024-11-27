@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>임시보호 게시물 작성</title>
     <link rel="stylesheet" href="assets/css/postWrite.css">
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
+    <script>
+        // Firebase 초기화 설정
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
 </head>
 <body>
     <!-- 헤더 -->
@@ -33,19 +49,10 @@
         </div>
     </header>
     
-    <div class="auth">
-        <span class="logged-out" style="display: none;">
-            <a href="login.html">로그인</a> | <a href="signup.html">회원가입</a>
-        </span>
-        <span class="logged-in" style="display: none;">
-            <a href="logout.html">로그아웃</a> | <a href="mypage.html">마이페이지</a>
-        </span>
-    </div>    
-    
     <div class="form-container">
         <!-- 제목 입력 섹션 -->
         <div class="section title-section">
-            <input type="text" placeholder="제목을 입력해 주세요.">
+            <input type="text" id="post-title" placeholder="제목을 입력해 주세요.">
         </div>
     
         <!-- 사진 첨부 및 상세 내용 섹션 -->
@@ -58,7 +65,7 @@
     
             <!-- 상세 내용 섹션 -->
             <div class="section detail-section">
-                <textarea placeholder="임시보호 중인 동물의 특징, 성별, 종 등을 상세하게 적어 주세요."></textarea>
+                <textarea id="post-details" placeholder="임시보호 중인 동물의 특징, 성별, 종 등을 상세하게 적어 주세요."></textarea>
             </div>
         </div>
     
@@ -88,8 +95,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 예제: 로그인 여부를 확인하는 변수
-            const isLoggedIn = true; // 실제로는 서버로부터 상태를 받아와야 함
+            const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
     
             const loggedInElement = document.querySelector('.logged-in');
             const loggedOutElement = document.querySelector('.logged-out');
@@ -103,6 +109,37 @@
                 alert('게시글 작성은 로그인 후 이용 가능합니다.');
                 window.location.href = 'login.html'; // 로그인 페이지로 리다이렉트
             }
+        });
+
+        // Firebase에 게시글 저장
+        document.getElementById('submit-button').addEventListener('click', () => {
+            const title = document.getElementById('post-title').value.trim();
+            const details = document.getElementById('post-details').value.trim();
+            const fileInput = document.getElementById('photo-upload');
+            const postId = Date.now();
+    
+            if (title === "" || details === "") {
+                alert('제목과 상세 내용을 입력해 주세요.');
+                return;
+            }
+    
+            const postData = {
+                pid: postId,
+                title: title,
+                details: details,
+                category: "임시보호",
+                postStatus: "활성",
+                image: fileInput.files.length > 0 ? fileInput.files[0].name : ""
+            };
+    
+            database.ref('Post/' + postId).set(postData)
+                .then(() => {
+                    alert('게시글이 등록되었습니다.');
+                    window.location.href = 'protectList.html';
+                })
+                .catch((error) => {
+                    console.error("게시글 작성 중 오류 발생:", error);
+                });
         });
     </script>
     <script src="assets/js/protectWrite.js"></script>
