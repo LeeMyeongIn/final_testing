@@ -10,9 +10,6 @@
     <script src="assets/js/navigation.js" defer></script>
     <script src="assets/js/language_signup.js" defer></script>
     <script src="assets/js/signup_validation.js" defer></script>
-    <!-- Firebase SDK 추가 -->
-    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <div class="container">
@@ -43,19 +40,20 @@
         <main class="login-main">
             <section class="login-signup-section">
                 <h2>회원가입</h2>
+                <!-- 수정된 폼 -->
                 <form onsubmit="return validateSignup(event)">
                     <div class="form-group">
                         <label for="signup-username">아이디</label>
                         <div class="input-container">
                             <input type="text" id="signup-username" placeholder="아이디를 입력하세요">
-                            <button type="button" class="duplicate-check" id="username-check-button">중복 검사</button>
+                            <button type="button" class="duplicate-check">중복 검사</button>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="signup-nickname">닉네임</label>
                         <div class="input-container">
                             <input type="text" id="signup-nickname" placeholder="닉네임을 입력하세요">
-                            <button type="button" class="duplicate-check" id="nickname-check-button">중복 검사</button>
+                            <button type="button" class="duplicate-check">중복 검사</button>
                         </div>
                     </div>                    
                     <div class="form-group">
@@ -70,7 +68,7 @@
                         <small id="password-check-message" style="display: none; color: red;">비밀번호가 일치하지 않습니다.</small>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" id="signup-button">회원가입 완료</button>
+                        <button type="submit" id="signup-button" disabled>회원가입 완료</button>
                     </div>                    
                 </form>
             </section>
@@ -82,101 +80,5 @@
             <button id="lang-en" onclick="changeLanguage('en')">ENGLISH</button>
         </div>
     </div>
-
-    <script>
-        // Firebase 초기화 설정
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        // Firebase 초기화
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        function validateSignup(event) {
-            event.preventDefault();
-            const username = document.getElementById('signup-username').value;
-            const nickname = document.getElementById('signup-nickname').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
-
-            if (username.trim() === "" || nickname.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {
-                alert('모든 필드를 입력해 주세요.');
-                return false;
-            }
-
-            if (password !== confirmPassword) {
-                document.getElementById('password-check-message').style.display = 'block';
-                return false;
-            } else {
-                document.getElementById('password-check-message').style.display = 'none';
-            }
-
-            // Firebase에 사용자 정보 저장
-            const userData = {
-                nickname: nickname,
-                password: password
-            };
-
-            database.ref('users/' + username).set(userData)
-                .then(() => {
-                    alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
-                    window.location.href = 'login.html';
-                })
-                .catch((error) => {
-                    console.error("회원가입 중 오류 발생:", error);
-                });
-
-            return false;
-        }
-
-        // 아이디 중복 검사
-        document.getElementById('username-check-button').addEventListener('click', () => {
-            const username = document.getElementById('signup-username').value;
-            if (username.trim() === "") {
-                alert('아이디를 입력해 주세요.');
-                return;
-            }
-
-            database.ref('users/' + username).once('value')
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        alert('이미 사용 중인 아이디입니다.');
-                    } else {
-                        alert('사용 가능한 아이디입니다.');
-                    }
-                })
-                .catch((error) => {
-                    console.error("아이디 중복 검사 중 오류 발생:", error);
-                });
-        });
-
-        // 닉네임 중복 검사
-        document.getElementById('nickname-check-button').addEventListener('click', () => {
-            const nickname = document.getElementById('signup-nickname').value;
-            if (nickname.trim() === "") {
-                alert('닉네임을 입력해 주세요.');
-                return;
-            }
-
-            database.ref('users').orderByChild('nickname').equalTo(nickname).once('value')
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        alert('이미 사용 중인 닉네임입니다.');
-                    } else {
-                        alert('사용 가능한 닉네임입니다.');
-                    }
-                })
-                .catch((error) => {
-                    console.error("닉네임 중복 검사 중 오류 발생:", error);
-                });
-        });
-    </script>
 </body>
 </html>
