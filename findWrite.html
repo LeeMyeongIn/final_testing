@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>발견 게시물 작성</title>
     <link rel="stylesheet" href="assets/css/findWrite.css">
+    <!-- Firebase SDK 추가 -->
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <!-- 헤더 -->
@@ -45,7 +48,7 @@
     <div class="form-container">
         <!-- 제목 입력 섹션 -->
         <div class="section title-section">
-            <input type="text" placeholder="제목을 입력해 주세요.">
+            <input type="text" id="post-title" placeholder="제목을 입력해 주세요.">
         </div>
     
         <!-- 사진 첨부 및 상세 내용 섹션 -->
@@ -58,7 +61,7 @@
     
             <!-- 상세 내용 섹션 -->
             <div class="section detail-section">
-                <textarea placeholder="실종된 동물의 이름, 특징, 성별, 종, 실종 위치, 실종 시간 등을 상세하게 적어 주세요."></textarea>
+                <textarea id="post-details" placeholder="실종된 동물의 이름, 특징, 성별, 종, 실종 위치, 실종 시간 등을 상세하게 적어 주세요."></textarea>
             </div>
         </div>
     
@@ -87,8 +90,23 @@
     </footer>
 
     <script>
+        // Firebase 초기화 설정
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Firebase 초기화
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         document.addEventListener('DOMContentLoaded', () => {
-            // 예제: 로그인 여부를 확인하는 변수
+            // 로그인 여부 확인
             const isLoggedIn = true; // 실제로는 서버로부터 상태를 받아와야 함
     
             const loggedInElement = document.querySelector('.logged-in');
@@ -102,10 +120,44 @@
                 loggedOutElement.style.display = 'inline';
                 alert('게시글 작성은 로그인 후 이용 가능합니다.');
                 window.location.href = 'login.html'; // 로그인 페이지로 리다이렉트
+                return;
             }
+
+            // 게시글 작성 버튼 클릭 이벤트
+            const submitButton = document.getElementById('submit-button');
+            submitButton.addEventListener('click', () => {
+                const title = document.getElementById('post-title').value;
+                const details = document.getElementById('post-details').value;
+                const date = new Date().toLocaleString();
+                const author = "exampleUser"; // 실제로는 로그인한 사용자의 정보를 받아와야 함
+
+                if (title.trim() === "" || details.trim() === "") {
+                    alert('제목과 내용을 모두 입력해 주세요.');
+                    return;
+                }
+
+                // Firebase에 게시글 저장
+                const newPostKey = database.ref().child('posts').push().key;
+                const postData = {
+                    title: title,
+                    details: details,
+                    date: date,
+                    author: author
+                };
+
+                const updates = {};
+                updates['/posts/' + newPostKey] = postData;
+
+                database.ref().update(updates)
+                    .then(() => {
+                        alert('게시글이 성공적으로 작성되었습니다.');
+                        window.location.href = 'findList.html'; // 게시물 목록 페이지로 이동
+                    })
+                    .catch((error) => {
+                        console.error("게시글 작성 중 오류 발생:", error);
+                    });
+            });
         });
     </script>
-
-    <script src="assets/js/findWrite.js"></script>
 </body>
 </html>
