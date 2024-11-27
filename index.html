@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>발자국 탐정</title>
     <link rel="stylesheet" href="assets/css/style_main.css">
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
+    <script>
+        // Firebase 초기화 설정
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
     <script src="assets/js/navigation.js" defer></script>
     <script src="assets/js/login_status.js" defer></script>
     <script src="assets/js/language_index.js" defer></script>
@@ -49,7 +65,7 @@
         <!-- 우측 섹션 -->
         <aside class="right-section">
             <!-- 비로그인 상태 UI -->
-             <div id="logged-out-ui">
+            <div id="logged-out-ui">
                 <div class="auth-text">
                     <a href="login.html">로그인</a> | <a href="signup.html">회원가입</a>
                 </div>
@@ -63,7 +79,7 @@
                 </div>
             </div>
             <!-- 로그인 상태 UI -->
-             <div id="logged-in-ui" style="display: none;">
+            <div id="logged-in-ui" style="display: none;">
                 <div class="auth-text">
                     <a href="mypage.html">마이페이지</a> | <a href="#" id="logout">로그아웃</a>
                 </div>
@@ -77,5 +93,29 @@
             </div>
         </aside>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 로그인 상태 관리
+            const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+            const loggedOutUI = document.getElementById('logged-out-ui');
+            const loggedInUI = document.getElementById('logged-in-ui');
+
+            if (isLoggedIn) {
+                loggedOutUI.style.display = 'none';
+                loggedInUI.style.display = 'block';
+            } else {
+                loggedOutUI.style.display = 'block';
+                loggedInUI.style.display = 'none';
+            }
+        });
+
+        // 로그아웃 기능
+        document.getElementById('logout').addEventListener('click', () => {
+            localStorage.setItem('loggedIn', 'false');
+            alert('로그아웃되었습니다.');
+            window.location.reload();
+        });
+    </script>
 </body>
 </html>
