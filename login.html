@@ -9,6 +9,9 @@
     <script src="assets/js/navigation.js" defer></script>
     <script src="assets/js/login_validation.js" defer></script>
     <script src="assets/js/language_login.js" defer></script>
+    <!-- Firebase SDK 추가 -->
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
 </head>
 <body>
     <div class="container">
@@ -70,23 +73,50 @@
     </div>
 
     <script>
+        // Firebase 초기화 설정
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Firebase 초기화
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         function validateLogin() {
             const username = document.getElementById('login-username').value;
             const password = document.getElementById('login-password').value;
 
-            // 간단한 유효성 검사
-            if (username === 'admin' && password === '1234') {
-                // 로그인 상태 저장
-                localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('username', username);
-
-                // index.html로 리다이렉트
-                window.location.href = 'index.html';
-                return false; // 폼의 기본 제출 동작 방지
-            } else {
-                alert('아이디 또는 비밀번호가 잘못되었습니다.');
+            if (username.trim() === "" || password.trim() === "") {
+                alert('아이디와 비밀번호를 입력해 주세요.');
                 return false; // 폼의 기본 제출 동작 방지
             }
+
+            // Firebase에서 사용자 정보 확인
+            database.ref('users/' + username).once('value')
+                .then((snapshot) => {
+                    const user = snapshot.val();
+                    if (user && user.password === password) {
+                        // 로그인 상태 저장
+                        localStorage.setItem('loggedIn', 'true');
+                        localStorage.setItem('username', username);
+
+                        // index.html로 리다이렉트
+                        window.location.href = 'index.html';
+                    } else {
+                        alert('아이디 또는 비밀번호가 잘못되었습니다.');
+                    }
+                })
+                .catch((error) => {
+                    console.error("로그인 중 오류 발생:", error);
+                });
+
+            return false; // 폼의 기본 제출 동작 방지
         }
     </script>
 </body>
