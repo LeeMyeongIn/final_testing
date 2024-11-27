@@ -148,7 +148,7 @@
                 return;
             }
 
-            database.ref('users').orderByChild('loginID').equalTo(username).once('value')
+            database.ref('users/' + username).once('value')
                 .then((snapshot) => {
                     if (snapshot.exists()) {
                         alert('이미 사용 중인 아이디입니다.');
@@ -160,9 +160,6 @@
                         document.getElementById('signup-username').reportValidity();
                     }
                 })
-                .catch((error) => {
-                    console.error("아이디 중복 검사 중 오류 발생:", error);
-                });
                 .catch((error) => {
                     console.error("아이디 중복 검사 중 오류 발생:", error);
                 });
