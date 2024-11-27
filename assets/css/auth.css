@@ -1,0 +1,22 @@
+/* 로그인/회원가입 텍스트 */
+.auth-text {
+    position: absolute;
+    top: 1rem; /* 상단 여백 */
+    right: 2rem; /* 오른쪽 여백 */
+    font-size: 1rem;
+    color: #fef4e8;
+}
+
+.auth-text a {
+    color: #fef4e8;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+.auth-text a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}

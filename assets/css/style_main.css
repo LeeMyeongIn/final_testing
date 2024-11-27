@@ -33,7 +33,7 @@
     white-space: pre-line; /* 줄바꿈 허용 */
     margin-bottom: 20rem; /* 아래쪽 여백 */
     margin-top: -3rem; /* 위로 이동 (음수 값으로 조정) */
-    margin-left: -5rem; /* 왼쪽 이동 */
+    margin-left: -2rem; /* 왼쪽 이동 */
 }
 
 .language-selector {

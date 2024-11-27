@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const row = `
                 <tr>
                     <td>${index + 1}</td> <!-- 번호 -->
-                    <td><a href="findPost.html">${post.title}</a></td> <!-- 제목 -->
+                    <td><a href="lostPost.html">${post.title}</a></td> <!-- 제목 -->
                     <td>${post.author}</td> <!-- 작성자 -->
                     <td>${post.date}</td> <!-- 작성일 -->
                 </tr>
@@ -25,13 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const langBtns = document.querySelectorAll('.lang-btn');
     const content = {
         ko: {
-            title: '발견 게시물',
+            title: '실종 게시물',
             noPosts: '작성된 게시물이 없습니다.',
             postButton: '게시글 작성',
             searchPlaceholder: '게시물을 검색하세요...',
         },
         en: {
-            title: 'Found Posts',
+            title: 'Lost Posts',
             noPosts: 'No posts available.',
             postButton: 'Create Post',
             searchPlaceholder: 'Search for posts...',

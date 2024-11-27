@@ -15,24 +15,24 @@ document.addEventListener('DOMContentLoaded', () => {
         posts.push(postData); // 데이터 추가
         localStorage.setItem('posts', JSON.stringify(posts)); // 로컬 스토리지에 저장
 
-        window.location.href = 'findList.html'; // 게시물 목록으로 이동
+        window.location.href = 'protectList.html'; // 게시물 목록으로 이동
     });
 
     // 언어 변경 관련 로직
     const langBtns = document.querySelectorAll('.lang-btn');
     const content = {
         ko: {
-            title: '발견 게시물 작성',
+            title: '임시보호 게시물 작성',
             titlePlaceholder: '제목을 입력해 주세요.',
             photoLabel: '사진 첨부',
-            detailPlaceholder: '발견된 동물의 이름, 특징, 성별, 종, 발견 위치, 발견 시간 등을 상세하게 적어 주세요.',
+            detailPlaceholder: '임시보호 중인 동물의 특징, 성별, 종 등을 상세하게 적어 주세요.',
             submitButton: '작성 완료',
         },
         en: {
-            title: 'Create Found Post',
+            title: 'Create Protect Post',
             titlePlaceholder: 'Enter a title.',
             photoLabel: 'Attach Photo',
-            detailPlaceholder: 'Provide details such as the animal’s name, characteristics, gender, species, location, and time.',
+            detailPlaceholder: 'Provide details such as the animal’s characteristics, gender, species.',
             submitButton: 'Submit Post',
         },
     };

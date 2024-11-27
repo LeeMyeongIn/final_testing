@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!post) {
         alert('게시물이 존재하지 않습니다.');
-        window.location.href = 'findList.html';
+        window.location.href = 'protectList.html';
         return;
     }
 
@@ -126,12 +126,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const langBtns = document.querySelectorAll('.lang-btn');
     const content = {
         ko: {
-            title: '발견 게시물 보기',
+            title: '임시보호 게시물 보기',
             commentPlaceholder: '댓글을 작성하세요...',
             addComment: '댓글 작성 완료',
         },
         en: {
-            title: 'View Found Post',
+            title: 'View Protect Post',
             commentPlaceholder: 'Write a comment...',
             addComment: 'Submit Comment',
         },
