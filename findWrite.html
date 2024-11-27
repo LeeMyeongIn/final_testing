@@ -136,28 +136,49 @@
                     return;
                 }
 
-                // Firebase에 게시글 저장
-                const newPostKey = database.ref().child('posts').push().key;
-                const postData = {
-                    title: title,
-                    details: details,
-                    date: date,
-                    author: author
-                };
-
-                const updates = {};
-                updates['/posts/' + newPostKey] = postData;
-
-                database.ref().update(updates)
-                    .then(() => {
-                        alert('게시글이 성공적으로 작성되었습니다.');
-                        window.location.href = 'findList.html'; // 게시물 목록 페이지로 이동
-                    })
-                    .catch((error) => {
-                        console.error("게시글 작성 중 오류 발생:", error);
+                // 사진 업로드 처리
+                const photoUpload = document.getElementById('photo-upload').files[0];
+                if (photoUpload) {
+                    const storageRef = firebase.storage().ref();
+                    const photoRef = storageRef.child('images/' + photoUpload.name);
+                    photoRef.put(photoUpload).then((snapshot) => {
+                        snapshot.ref.getDownloadURL().then((url) => {
+                            savePostToDatabase(title, details, date, author, url);
+                        }).catch((error) => {
+                            console.error("사진 업로드 중 오류 발생:", error);
+                        });
+                    }).catch((error) => {
+                        console.error("사진 업로드 중 오류 발생:", error);
                     });
+                } else {
+                    savePostToDatabase(title, details, date, author, null);
+                }
             });
         });
+
+        // Firebase에 게시글 저장
+        function savePostToDatabase(title, details, date, author, imageURL) {
+            const newPostKey = database.ref().child('posts').push().key;
+            const postData = {
+                title: title,
+                details: details,
+                date: date,
+                author: author,
+                imageURL: imageURL
+            };
+
+            const updates = {};
+            updates['/posts/' + newPostKey] = postData;
+
+            database.ref().update(updates)
+                .then(() => {
+                    alert('게시글이 성공적으로 작성되었습니다.');
+                    window.location.href = 'findList.html'; // 게시물 목록 페이지로 이동
+                })
+                .catch((error) => {
+                    console.error("게시글 작성 중 오류 발생:", error);
+                });
+        }
     </script>
 </body>
 </html>
