@@ -150,28 +150,29 @@
 
         // 아이디 중복 검사
         function checkUsernameDuplicate() {
-            const username = document.getElementById('signup-username').value;
-            if (username.trim() === "") {
-                alert('아이디를 입력해 주세요.');
-                return;
-            }
+                const username = document.getElementById('signup-username').value;
+                if (username.trim() === "") {
+                        alert('아이디를 입력해 주세요.');
+                        return;
+                }
 
-            database.ref('UserData').orderByChild('loginID').equalTo(username).once('value')
-                .then((snapshot) => {
-                    if (snapshot.exists()) {
-                        alert('이미 사용 중인 아이디입니다.');
-                        document.getElementById('signup-username').setCustomValidity('이미 사용 중인 아이디입니다.');
-                        document.getElementById('signup-username').reportValidity();
-                    } else {
-                        alert('사용 가능한 아이디입니다.');
-                        document.getElementById('signup-username').setCustomValidity('');
-                        document.getElementById('signup-username').reportValidity();
-                    }
-                })
-                .catch((error) => {
-                    console.error("아이디 중복 검사 중 오류 발생:", error);
-                });
+                database.ref('UserData').orderByChild('loginID').equalTo(username).once('value')
+                        .then((snapshot) => {
+                                const usernameInput = document.getElementById('signup-username');
+                                if (snapshot.exists()) {
+                                        usernameInput.setCustomValidity('이미 사용 중인 아이디입니다.');
+                                } else {
+                                        usernameInput.setCustomValidity('');
+                                        alert('사용 가능한 아이디입니다.');
+                                }
+                                usernameInput.reportValidity();
+                        })
+                        .catch((error) => {
+                                console.error("아이디 중복 검사 중 오류 발생:", error);
+                                alert('아이디 중복 검사 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                        });
         }
+
 
         // 닉네임 중복 검사
         function checkNicknameDuplicate() {
