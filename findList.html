@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>발견 게시물</title>
     <link rel="stylesheet" href="assets/css/postList.css">
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
+    <script>
+        // Firebase 초기화 설정
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
 </head>
 <body>
     <!-- 헤더 -->
@@ -37,13 +53,12 @@
     <main>
         <h1>발견 게시물</h1>
 
-    <!-- 게시글 작성 버튼 -->
-    <div class="post-create">
-        <a href="findWrite.html">
-            <button id="post-create-button">게시글 작성</button>
-        </a>
-    </div>
-
+        <!-- 게시글 작성 버튼 -->
+        <div class="post-create">
+            <a href="findWrite.html">
+                <button id="post-create-button">게시글 작성</button>
+            </a>
+        </div>
 
         <!-- 게시물 검색 영역 -->
         <div class="search-bar">
@@ -82,7 +97,6 @@
         </div>
         <p id="no-chat-message">채팅 내역이 없습니다.</p>
     </aside>
-    
 
     <!-- 푸터 -->
     <footer>
@@ -92,6 +106,39 @@
         </div>
         <p>© 2024 발자국 탐정</p>
     </footer>      
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const postTableBody = document.querySelector('.post-table tbody');
+            const noPostsMessage = document.querySelector('.no-posts');
+
+            // Firebase에서 게시물 가져오기
+            database.ref('Post').orderByChild('category').equalTo('발견').once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const posts = snapshot.val();
+                        let index = 1;
+                        Object.keys(posts).forEach((key) => {
+                            const post = posts[key];
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${index++}</td>
+                                <td><a href="findPost.html?pid=${key}">${post.title}</a></td>
+                                <td>익명</td>
+                                <td>${new Date(post.pid).toLocaleDateString()}</td>
+                            `;
+                            postTableBody.appendChild(row);
+                        });
+                        noPostsMessage.style.display = 'none';
+                    } else {
+                        noPostsMessage.style.display = 'block';
+                    }
+                })
+                .catch((error) => {
+                    console.error("게시물 목록을 가져오는 중 오류 발생:", error);
+                });
+        });
+    </script>
     <script src="assets/js/findList.js"></script>
 </body>
 </html>
