@@ -6,7 +6,8 @@
 #include <unordered_map>  // 해시 맵 자료구조를 사용하기 위한 헤더 파일 포함
 #include <ctime>  // 시간 관련 기능을 사용하기 위한 헤더 파일 포함
 #include <algorithm>  // 정렬을 위한 헤더 파일 포함
-
+#pragma comment(lib, "libmysql.lib")
+#define _CRT_SECURE_NO_WARNINGS
 using namespace std;
 
 // chatStart 클래스: 댓글을 통해 채팅을 시작하는 기능 관리
@@ -192,7 +193,7 @@ public:
         cout << "제재 번호 " << restrictionNum << "에 대한 제재가 해제되었습니다." << endl;
         return true;
     }
-};
+
 
 
 // 사용자 클래스 정의
