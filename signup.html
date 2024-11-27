@@ -13,7 +13,6 @@
     <!-- Firebase SDK 추가 -->
     <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
-
 </head>
 <body>
     <div class="container">
@@ -97,11 +96,11 @@
             appId: "YOUR_APP_ID"
         };
 
-        // Firebase 초기화
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        $1
 
-        console.log("Firebase 연결 확인:", firebase.apps.length > 0 ? "연결됨" : "연결되지 않음");
+// Firebase 연결 확인용 로그
+console.log("Firebase 연결 확인:", firebase.apps.length > 0 ? "연결됨" : "연결되지 않음");
+
         function validateSignup(event) {
             event.preventDefault();
             const username = document.getElementById('signup-username').value;
