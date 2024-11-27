@@ -1,0 +1,211 @@
+/* 전체 레이아웃 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #4e341e; /* 진한 갈색 배경 */
+    color: #fef4e8; /* 연한 베이지 텍스트 */
+}
+
+/*index.html*/
+
+/* 좌측 로고 및 언어 선택 */
+.home-left-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.home-left-section .logo h1 {
+    font-size: 7.0rem; /* 글씨 크기 */
+    text-align: left; /* 정렬 */
+    line-height: 1.5; /* 줄 간격 */
+    white-space: pre-line; /* 줄바꿈 허용 */
+    margin-bottom: 20rem; /* 아래쪽 여백 */
+    margin-top: -3rem; /* 위로 이동 (음수 값으로 조정) */
+    margin-left: -5rem; /* 왼쪽 이동 */
+}
+
+.language-selector {
+    position: absolute; /* 부모 요소를 기준으로 위치 지정 */
+    bottom: 2rem; /* 화면 하단에서 2rem 위로 이동 */
+    left: 2rem; /* 왼쪽에서 2rem만큼 띄움 */
+    display: flex; /* 버튼 정렬을 위한 flex 사용 */
+    gap: 1rem; /* 버튼 간격 설정 */
+}
+
+.language-selector button {
+    background: none;
+    border: none;
+    color: #fef4e8; /* 연한 베이지 */
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: font-weight 0.2s ease, text-decoration 0.2s ease;
+}
+
+.language-selector button.active {
+    font-weight: bold; /* 활성화된 버튼은 굵게 표시 */
+    text-decoration: underline; /* 밑줄 표시 */
+}
+
+.language-selector button:hover {
+    text-decoration: underline; /* 호버 시 밑줄 표시 */
+}
+
+/* 중앙 카테고리 */
+.center-section {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    text-align: center;
+    margin-top: -2rem;
+}
+
+.category img {
+    width: 400px;
+    height: 400px;
+    margin-bottom: -2rem;
+    transition: transform 0.3s ease;
+}
+
+.category img:hover {
+    transform: scale(1.1);
+}
+
+.category p {
+    font-size: 1.5rem;
+}
+
+/* 우측 섹션 */
+.right-section {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    margin-top: -3rem;
+}
+
+/* 비로그인 상태 */
+#logged-out-ui .auth-text {
+    position: absolute;
+    top: 1rem; /* 상단 여백 */
+    right: 2rem; /* 오른쪽 여백 */
+    font-size: 1rem;
+    color: #fef4e8;
+}
+
+#logged-out-ui .auth-text a {
+    color: #fef4e8;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+#logged-out-ui .auth-text a:hover {
+    text-decoration: underline;
+}
+
+#logged-out-ui .manual {
+    width: 22rem; /* 고정된 너비 설정 */
+    height: calc(100vh - 2rem); /* 고정된 높이 설정 */
+    background-color: #a87c60; /* 연한 갈색 */
+    padding: 2rem; /* 내부 여백 */
+    border-radius: 15px; /* 둥근 모서리 */
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 */
+    overflow-y: auto; /* 스크롤 가능 */
+    margin-top: 6rem; /* 위쪽 외부 여백 */
+    margin-right: 1rem; /* 오른쪽 외부 여백 */
+}
+
+#logged-out-ui .manual h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+}
+
+#logged-out-ui .manual ul {
+    list-style: none;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #fef4e8; /* 연한 베이지 */
+}
+
+/* 로그인 상태 */
+#logged-in-ui .auth-text {
+    position: absolute;
+    top: 1rem; /* 상단 여백 */
+    right: 2rem; /* 오른쪽 여백 */
+    font-size: 1rem;
+    color: #fef4e8;
+}
+
+#logged-in-ui .auth-text a {
+    color: #fef4e8;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+#logged-in-ui .auth-text a:hover {
+    text-decoration: underline;
+}
+
+#logged-in-ui .chat {
+    width: 22rem; /* 고정된 너비 설정 */
+    height: calc(100vh - 2rem); /* 고정된 높이 설정 */
+    background-color: #cf9977;
+    padding: 2rem; /* 내부 여백 */
+    border-radius: 15px; /* 둥근 모서리 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 */
+    overflow-y: auto; /* 스크롤 가능 */
+    margin-top: 6rem; /* 위쪽 외부 여백 */
+    margin-right: 1rem; /* 오른쪽 외부 여백 */
+    color: #fef4e8; /* 연한 베이지 텍스트 */
+}
+
+#logged-in-ui .chat h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+#logged-in-ui .chat ul {
+    list-style: none;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+#logged-in-ui .chat ul li {
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#logged-in-ui .chat ul li:hover {
+    background-color: #a87c60; /* 연한 갈색 */
+}
+
+
+.hidden {
+    display: none;
+}
