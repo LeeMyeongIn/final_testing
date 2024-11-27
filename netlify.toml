@@ -1,3 +1,0 @@
-[build]
-  functions = "netlify/functions"    # Functions 디렉토리 경로
-  publish = "frontend"              # 프론트엔드 정적 파일 경로
