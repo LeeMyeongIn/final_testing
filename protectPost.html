@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>임시보호 게시물 보기</title>
     <link rel="stylesheet" href="assets/css/postDetail.css">
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
+    <script>
+        // Firebase 초기화 설정
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
 </head>
 <body>
     <!-- 헤더 -->
@@ -77,6 +93,60 @@
         </div>
         <p>© 2024 발자국 탐정</p>
     </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const postId = params.get('pid');
+
+            if (postId) {
+                // Firebase에서 게시물 데이터 가져오기
+                database.ref('Post/' + postId).once('value')
+                    .then((snapshot) => {
+                        if (snapshot.exists()) {
+                            const post = snapshot.val();
+                            document.getElementById('post-title').innerText = post.title;
+                            document.getElementById('post-details').innerText = post.details;
+                            if (post.image) {
+                                document.getElementById('post-image').src = `assets/uploads/${post.image}`;
+                            }
+                        } else {
+                            alert('게시물을 찾을 수 없습니다.');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("게시물 불러오는 중 오류 발생:", error);
+                    });
+            } else {
+                alert('잘못된 게시물 ID입니다.');
+            }
+        });
+
+        // 댓글 작성 기능 추가
+        document.getElementById('add-comment').addEventListener('click', () => {
+            const commentInput = document.getElementById('comment-input').value.trim();
+            if (commentInput === "") {
+                alert('댓글을 입력해 주세요.');
+                return;
+            }
+
+            const commentData = {
+                commenter: '익명',
+                comment: commentInput,
+                time: new Date().toISOString()
+            };
+
+            const postId = new URLSearchParams(window.location.search).get('pid');
+            database.ref(`Post/${postId}/comments`).push(commentData)
+                .then(() => {
+                    alert('댓글이 추가되었습니다.');
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error("댓글 작성 중 오류 발생:", error);
+                });
+        });
+    </script>
     <script src="assets/js/protectPost.js"></script>
 </body>
 </html>
