@@ -44,9 +44,12 @@ async function validateLogin() {
         return false;
     }
 }
-// 로그인 폼 제출 이벤트 핸들러
-document.querySelector('form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    validateLogin(); // 로그인 유효성 검사 및 처리
-});
+function customAddEventListener(element, eventType, callback) {
+    if (element && eventType && typeof callback === 'function') {
+        element[`on${eventType}`] = callback; // 이벤트 핸들러를 직접 할당
+    } else {
+        console.error('올바르지 않은 요소, 이벤트 유형, 또는 콜백 함수입니다.');
+    }
+}
+
 
