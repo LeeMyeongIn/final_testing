@@ -1,31 +1,3 @@
-// 관리자 계정 생성 함수
-async function createAdminAccount() {
-    try {
-        // Firebase Database에서 admin 계정이 이미 존재하는지 확인
-        const snapshot = await database.ref('UserData/admin').once('value');
-        if (snapshot.exists()) {
-            console.log("관리자 계정이 이미 존재합니다.");
-            return; // 계정이 이미 존재하면 함수 종료
-        }
-
-        // admin 계정 데이터
-        const adminData = {
-            loginID: "admin",
-            password: "1234",
-            nickName: "관리자"
-        };
-
-        // Firebase Database에 admin 계정 추가
-        await database.ref('UserData/admin').set(adminData);
-        console.log("관리자 계정이 성공적으로 생성되었습니다!");
-    } catch (error) {
-        console.error("관리자 계정을 생성하는 중 오류 발생:", error);
-    }
-}
-
-// 관리자 계정 생성 호출 (필요할 때 실행)
-createAdminAccount();
-
 
 // 로그인 유효성 검사 및 처리
 async function validateLogin() {
