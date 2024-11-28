@@ -21,6 +21,15 @@
         };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+
+        // Firebase 연결 확인
+        firebase.database().ref('.info/connected').on('value', (snapshot) => {
+            if (snapshot.val() === true) {
+                console.log('Firebase에 연결되었습니다.');
+            } else {
+                console.log('Firebase 연결이 끊어졌습니다.');
+            }
+        });
     </script>
 </head>
 <body>
