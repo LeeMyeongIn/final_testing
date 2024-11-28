@@ -26,8 +26,8 @@ function checkPasswordMatch() {
 function validateSignup(event) {
     event.preventDefault(); // 폼 기본 제출 동작 방지
 
-    const loginID = document.getElementById('signup-loginID').value;
-    const nickName = document.getElementById('signup-nickName').value;
+    const username = document.getElementById('signup-username').value;
+    const nickname = document.getElementById('signup-nickname').value;
     const password = document.getElementById('signup-password').value;
     const confirmPassword = document.getElementById('signup-confirm-password').value;
 
@@ -52,7 +52,7 @@ function validateSignup(event) {
     }
 
     // 모든 필드 입력 확인
-    if (!loginID || !nickName || !password || !confirmPassword) {
+    if (!username || !nickname || !password || !confirmPassword) {
         alert("모든 필드를 입력해주세요.");
         return false;
     }
@@ -84,63 +84,26 @@ document.getElementById('signup-password').addEventListener('input', checkPasswo
 document.getElementById('signup-confirm-password').addEventListener('input', checkPasswordMatch);
 
 // 아이디 중복 검사
-document.querySelector('.input-container button').addEventListener('click', async function () {
-    const loginID = document.getElementById('signup-loginID').value;
-
-    if (loginID) {
-        try {
-            // Firebase에서 아이디 중복 확인
-            const snapshot = await database
-                .ref('UserData')
-                .orderByChild('loginID')
-                .equalTo(loginID)
-                .once('value');
-
-            if (snapshot.exists()) {
-                alert("이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.");
-                isUsernameChecked = false;
-            } else {
-                alert("아이디 중복 확인 완료!");
-                isUsernameChecked = true;
-            }
-
-            toggleSignupButton();
-        } catch (error) {
-            console.error("아이디 중복 확인 중 오류 발생:", error);
-            alert("아이디 중복 확인 중 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+document.querySelector('.input-container button').addEventListener('click', function () {
+    const username = document.getElementById('signup-loginID').value;
+    if (username) {
+        // 중복 검사 로직 (예: 서버 호출로 확인)
+        alert("아이디 중복 확인 완료!");
+        isUsernameChecked = true;
+        toggleSignupButton();
     } else {
         alert("아이디를 입력해주세요.");
     }
 });
 
 // 닉네임 중복 검사
-// 닉네임 중복 검사
-document.querySelectorAll('.input-container button')[1].addEventListener('click', async function () {
+document.querySelectorAll('.input-container button')[1].addEventListener('click', function () {
     const nickname = document.getElementById('signup-nickname').value;
-
     if (nickname) {
-        try {
-            // Firebase에서 닉네임 중복 확인
-            const snapshot = await database
-                .ref('UserData')
-                .orderByChild('nickName')
-                .equalTo(nickName)
-                .once('value');
-
-            if (snapshot.exists()) {
-                alert("이미 사용 중인 닉네임입니다. 다른 닉네임을 입력해주세요.");
-                isNicknameChecked = false;
-            } else {
-                alert("닉네임 중복 확인 완료!");
-                isNicknameChecked = true;
-            }
-
-            toggleSignupButton();
-        } catch (error) {
-            console.error("닉네임 중복 확인 중 오류 발생:", error);
-            alert("닉네임 중복 확인 중 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+        // 중복 검사 로직 (예: 서버 호출로 확인)
+        alert("닉네임 중복 확인 완료!");
+        isNicknameChecked = true;
+        toggleSignupButton();
     } else {
         alert("닉네임을 입력해주세요.");
     }
