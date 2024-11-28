@@ -26,8 +26,8 @@ function checkPasswordMatch() {
 function validateSignup(event) {
     event.preventDefault(); // 폼 기본 제출 동작 방지
 
-    const username = document.getElementById('signup-username').value;
-    const nickname = document.getElementById('signup-nickname').value;
+    const loginID = document.getElementById('signup-loginID').value;
+    const nickName = document.getElementById('signup-nickName').value;
     const password = document.getElementById('signup-password').value;
     const confirmPassword = document.getElementById('signup-confirm-password').value;
 
@@ -52,7 +52,7 @@ function validateSignup(event) {
     }
 
     // 모든 필드 입력 확인
-    if (!username || !nickname || !password || !confirmPassword) {
+    if (!loginID || !nickName || !password || !confirmPassword) {
         alert("모든 필드를 입력해주세요.");
         return false;
     }
@@ -85,15 +85,15 @@ document.getElementById('signup-confirm-password').addEventListener('input', che
 
 // 아이디 중복 검사
 document.querySelector('.input-container button').addEventListener('click', async function () {
-    const username = document.getElementById('signup-loginID').value;
+    const loginID = document.getElementById('signup-loginID').value;
 
-    if (username) {
+    if (loginID) {
         try {
             // Firebase에서 아이디 중복 확인
             const snapshot = await database
                 .ref('UserData')
                 .orderByChild('loginID')
-                .equalTo(username)
+                .equalTo(loginID)
                 .once('value');
 
             if (snapshot.exists()) {
@@ -125,7 +125,7 @@ document.querySelectorAll('.input-container button')[1].addEventListener('click'
             const snapshot = await database
                 .ref('UserData')
                 .orderByChild('nickName')
-                .equalTo(nickname)
+                .equalTo(nickName)
                 .once('value');
 
             if (snapshot.exists()) {
