@@ -26,7 +26,7 @@ function checkPasswordMatch() {
 function validateSignup(event) {
     event.preventDefault(); // 폼 기본 제출 동작 방지
 
-    const liginID = document.getElementById('signup-loginID').value;
+    const loginID = document.getElementById('signup-loginID').value;
     const nickName = document.getElementById('signup-nickName').value;
     const password = document.getElementById('signup-password').value;
     const confirmPassword = document.getElementById('signup-confirm-password').value;
