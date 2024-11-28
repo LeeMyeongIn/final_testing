@@ -45,8 +45,3 @@ async function validateLogin() {
     }
 }
 
-// 로그인 폼 제출 이벤트 핸들러 연결
-document.querySelector('form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    validateLogin();
-});
