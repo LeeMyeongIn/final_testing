@@ -12,6 +12,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
     <script src="assets/js/DB.js"></script>
+    <script src="assets/js/loginDB.js"></script>
 
 </head>
 <body>
@@ -75,11 +76,11 @@
 
     <script>
         function validateLogin() {
-            const username = document.getElementById('login-username').value;
+            const loginID = document.getElementById('login-loginID').value;
             const password = document.getElementById('login-password').value;
 
             // 간단한 유효성 검사
-            if (username === 'admin' && password === '1234') {
+            if (loginID === 'admin' && password === '1234') {
                 // 로그인 상태 저장
                 localStorage.setItem('loggedIn', 'true');
                 localStorage.setItem('username', username);
