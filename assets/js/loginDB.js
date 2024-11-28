@@ -74,8 +74,21 @@ async function validateLogin() {
     }
 }
 
-// 로그인 폼 제출 이벤트 핸들러 연결
-document.querySelector('form').addEventListener('submit', (event) => {
-    event.preventDefault();
+function customAddEventListener(element, eventType, callback) {
+    if (element && eventType && typeof callback === 'function') {
+        element[`on${eventType}`] = callback; // 이벤트 핸들러를 직접 할당
+    } else {
+        console.error('올바르지 않은 요소, 이벤트 유형, 또는 콜백 함수입니다.');
+    }
+}
+
+
+// 로그인 폼 가져오기
+const form = document.querySelector('form');
+
+// 커스텀 이벤트 리스너를 사용해 submit 이벤트 처리
+customAddEventListener(form, 'submit', (event) => {
+    event.preventDefault(); // 기본 동작 방지
     validateLogin(); // 로그인 유효성 검사 및 처리
 });
+
