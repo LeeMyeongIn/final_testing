@@ -1,15 +1,3 @@
-// Firebase 초기화 코드 (DB.js에 이미 초기화된 경우 생략 가능)
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
 
 // 로그인 유효성 검사 및 DB 기반 인증 처리
 async function validateLogin() {
