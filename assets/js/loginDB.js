@@ -44,4 +44,9 @@ async function validateLogin() {
         return false;
     }
 }
+// 로그인 폼 제출 이벤트 핸들러
+document.querySelector('form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    validateLogin(); // 로그인 유효성 검사 및 처리
+});
 
