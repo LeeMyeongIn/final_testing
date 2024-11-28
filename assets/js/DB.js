@@ -1,4 +1,4 @@
-<script>
+
         // Firebase 구성 정보
         const firebaseConfig = {
             apiKey: "AIzaSyAHSA0O4V9vnc5E1YvQNpQTZT5z4QOWE1k",
@@ -23,4 +23,3 @@
                 console.log('Firebase 연결이 끊어졌습니다.');
             }
         });
-</script>
