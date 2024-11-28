@@ -1,4 +1,3 @@
-
 // 로그인 유효성 검사 및 처리
 async function validateLogin() {
     const loginID = document.getElementById('login-loginID').value;
@@ -46,15 +45,17 @@ async function validateLogin() {
     }
 }
 
-// 로그인 폼 가져오기
-const form = document.querySelector('form');
+// DOMContentLoaded 이벤트 사용
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
 
-if (form) {
-    // 표준 addEventListener 사용
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // 기본 동작 방지
-        validateLogin(); // 로그인 유효성 검사 및 처리
-    });
-} else {
-    console.error('로그인 폼을 찾을 수 없습니다. 폼이 존재하는지 확인하세요.');
-}
+    if (form) {
+        // 표준 addEventListener 사용
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // 기본 동작 방지
+            validateLogin(); // 로그인 유효성 검사 및 처리
+        });
+    } else {
+        console.error('로그인 폼을 찾을 수 없습니다. 폼이 존재하는지 확인하세요.');
+    }
+});
