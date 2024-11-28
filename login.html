@@ -74,25 +74,6 @@
         </div>   
     </div>
 
-    <script>
-        function validateLogin() {
-            const loginID = document.getElementById('login-loginID').value;
-            const password = document.getElementById('login-password').value;
 
-            // 간단한 유효성 검사
-            if (loginID === 'admin' && password === '1234') {
-                // 로그인 상태 저장
-                localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('username', username);
-
-                // index.html로 리다이렉트
-                window.location.href = 'index.html';
-                return false; // 폼의 기본 제출 동작 방지
-            } else {
-                alert('아이디 또는 비밀번호가 잘못되었습니다.');
-                return false; // 폼의 기본 제출 동작 방지
-            }
-        }
-    </script>
 </body>
 </html>
