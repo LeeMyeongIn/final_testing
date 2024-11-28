@@ -41,12 +41,12 @@
 
         function validateSignup(event) {
             event.preventDefault();
-            const loginID = document.getElementById('signup-loginID').value;
-            const nickname = document.getElementById('signup-nickname').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const loginID = document.getElementById('signup-loginID').value.trim();
+            const nickname = document.getElementById('signup-nickname').value.trim();
+            const password = document.getElementById('signup-password').value.trim();
+            const confirmPassword = document.getElementById('signup-confirm-password').value.trim();
 
-            if (loginID.trim() === "" || nickname.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {
+            if (loginID === "" || nickname === "" || password === "" || confirmPassword === "") {
                 alert('모든 필드를 입력해 주세요.');
                 return false;
             }
@@ -58,35 +58,50 @@
                 document.getElementById('password-check-message').style.display = 'none';
             }
 
-            // Firebase에 사용자 정보 저장
+            // Firebase에 사용자 정보 저장 (uid 자동 생성)
+            const userRef = database.ref('UserData').push();
+            const uid = userRef.key;
+
             const userData = {
+                uid: uid,
                 loginID: loginID,
                 nickname: nickname,
                 password: password
             };
 
-            database.ref('UserData/' + loginID).set(userData)
-                .then(() => {
-                    alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
-                    window.location.href = 'login.html';
+            // 중복 검사 후 저장
+            database.ref('UserData').orderByChild('loginID').equalTo(loginID).once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        alert('이미 사용 중인 아이디입니다.');
+                    } else {
+                        userRef.set(userData)
+                            .then(() => {
+                                alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
+                                window.location.href = 'login.html';
+                            })
+                            .catch((error) => {
+                                console.error("회원가입 중 오류 발생:", error);
+                                alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                            });
+                    }
                 })
                 .catch((error) => {
-                    console.error("회원가입 중 오류 발생:", error);
-                    alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                    console.error("중복 검사 중 오류 발생:", error);
                 });
 
             return false;
         }
 
         function checkUsernameDuplicate() {
-            const lloginID = document.getElementById('signup-loginID').value.trim();
+            const loginID = document.getElementById('signup-loginID').value.trim();
             if (loginID === "") {
                 alert("아이디를 입력해 주세요.");
                 return;
             }
 
             // Firebase에서 아이디 중복 체크
-            database.ref('UserData/' + loginID).once('value')
+            database.ref('UserData').orderByChild('loginID').equalTo(loginID).once('value')
                 .then((snapshot) => {
                     if (snapshot.exists()) {
                         alert('이미 사용 중인 아이디입니다.');
@@ -192,3 +207,4 @@
     </div>
 </body>
 </html>
+
