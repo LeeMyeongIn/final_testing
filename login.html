@@ -103,6 +103,7 @@
                         const userKey = Object.keys(userData)[0];
                         if (userData[userKey].password === password) {
                             // 로그인 성공
+                            alert('로그인에 성공했습니다.');
                             localStorage.setItem('loggedIn', 'true');
                             localStorage.setItem('username', username);
                             window.location.href = 'index.html';
