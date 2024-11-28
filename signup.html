@@ -41,12 +41,12 @@
 
         function validateSignup(event) {
             event.preventDefault();
-            const username = document.getElementById('signup-username').value;
+            const loginID = document.getElementById('signup-loginID').value;
             const nickname = document.getElementById('signup-nickname').value;
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('signup-confirm-password').value;
 
-            if (username.trim() === "" || nickname.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {
+            if (loginID.trim() === "" || nickname.trim() === "" || password.trim() === "" || confirmPassword.trim() === "") {
                 alert('모든 필드를 입력해 주세요.');
                 return false;
             }
@@ -60,11 +60,12 @@
 
             // Firebase에 사용자 정보 저장
             const userData = {
+                loginID: loginID,
                 nickname: nickname,
                 password: password
             };
 
-            database.ref('UserData/' + username).set(userData)
+            database.ref('UserData/' + loginID).set(userData)
                 .then(() => {
                     alert('회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.');
                     window.location.href = 'login.html';
@@ -78,14 +79,14 @@
         }
 
         function checkUsernameDuplicate() {
-            const username = document.getElementById('signup-username').value.trim();
-            if (username === "") {
+            const lloginID = document.getElementById('signup-loginID').value.trim();
+            if (loginID === "") {
                 alert("아이디를 입력해 주세요.");
                 return;
             }
 
             // Firebase에서 아이디 중복 체크
-            database.ref('UserData/' + username).once('value')
+            database.ref('UserData/' + loginID).once('value')
                 .then((snapshot) => {
                     if (snapshot.exists()) {
                         alert('이미 사용 중인 아이디입니다.');
@@ -152,9 +153,9 @@
                 <!-- 수정된 폼 -->
                 <form onsubmit="return validateSignup(event)">
                     <div class="form-group">
-                        <label for="signup-username">아이디</label>
+                        <label for="signup-loginID">아이디</label>
                         <div class="input-container">
-                            <input type="text" id="signup-username" placeholder="아이디를 입력하세요">
+                            <input type="text" id="signup-loginID" placeholder="아이디를 입력하세요">
                             <button type="button" class="duplicate-check" onclick="checkUsernameDuplicate()">중복 검사</button>
                         </div>
                     </div>
