@@ -1,0 +1,92 @@
+/* 제목 섹션 */
+.title-section {
+    position: fixed;
+    margin-top: 1rem;
+    margin-left: 10rem;
+    width: 1187px;
+    background-color: #eaeaea;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.title-section input {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* 사진 첨부 섹션 */
+.photo-section {
+    position: fixed;
+    flex: none;
+    height: 350px;
+    background-color: #eaeaea;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin-left: 10rem;
+    margin-top: 8rem;
+}
+
+.photo-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #5a3e2b;
+}
+
+.photo-section input[type="file"] {
+    display: block;
+    margin: 0 auto;
+    font-size: 16px;
+    padding: 8px;
+}
+
+/* 상세 내용 섹션 */
+.detail-section {
+    position: fixed;
+    flex: none;
+    background-color: #eaeaea;
+    border-radius: 8px;
+    padding: 20px;
+    height: 450px;
+    width: 800px;
+    margin-top: 8rem;
+    margin-left: 34rem;
+}
+
+.detail-section textarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+/* 작성 완료 버튼 */
+.submit-section {
+    position: fixed;
+    bottom: 3rem;
+    left: 39rem;
+}
+
+.submit-section button {
+    background-color: #5a3e2b;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 35px;
+    width: 800px;
+}
+
+.submit-section button:hover {
+    background-color: #865a3e;
+}
