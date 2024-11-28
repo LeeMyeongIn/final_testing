@@ -78,8 +78,8 @@
             return false;
         }
 
-        function checkUsernameDuplicate() {
-            const loginID = document.getElementById('signup-loginID').value.trim();
+        function checkloginIDDuplicate() {
+            const checkID = document.getElementById('signup-loginID').value.trim();
             if (loginID === "") {
                 alert("아이디를 입력해 주세요.");
                 return;
@@ -156,7 +156,7 @@
                         <label for="signup-loginID">아이디</label>
                         <div class="input-container">
                             <input type="text" id="signup-loginID" placeholder="아이디를 입력하세요">
-                            <button type="button" class="duplicate-check" onclick="checkUsernameDuplicate()">중복 검사</button>
+                            <button type="button" class="duplicate-check" onclick="checkloginIDDuplicate()">중복 검사</button>
                         </div>
                     </div>
                     <div class="form-group">
