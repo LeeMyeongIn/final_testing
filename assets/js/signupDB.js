@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault(); // 기본 폼 제출 방지
 
         // 입력 데이터 가져오기
-        const username = document.getElementById('signup-username').value;
-        const nickname = document.getElementById('signup-nickname').value;
+        const loginID = document.getElementById('signup-loginID').value;
+        const nickName = document.getElementById('signup-nickName').value;
         const password = document.getElementById('signup-password').value;
 
         if (!validatePasswordMatch()) {
@@ -49,8 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const newUserRef = database.ref('UserData').push(); // 새로운 사용자 ID 생성
             await newUserRef.set({
                 uid: newUserRef.key, // Firebase에서 생성한 고유 ID
-                nickName: nickname,
-                loginID: username,
+                nickName: nickName,
+                loginID: loginID,
                 password: password,
                 login_method: 1 // 예: 1은 이메일 로그인
             });
