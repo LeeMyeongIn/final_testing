@@ -85,7 +85,7 @@ document.getElementById('signup-confirm-password').addEventListener('input', che
 
 // 아이디 중복 검사
 document.querySelector('.input-container button').addEventListener('click', function () {
-    const username = document.getElementById('signup-username').value;
+    const username = document.getElementById('signup-loginID').value;
     if (username) {
         // 중복 검사 로직 (예: 서버 호출로 확인)
         alert("아이디 중복 확인 완료!");
