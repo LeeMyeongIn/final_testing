@@ -86,9 +86,12 @@ function customAddEventListener(element, eventType, callback) {
 // 로그인 폼 가져오기
 const form = document.querySelector('form');
 
-// 커스텀 이벤트 리스너를 사용해 submit 이벤트 처리
-customAddEventListener(form, 'submit', (event) => {
-    event.preventDefault(); // 기본 동작 방지
-    validateLogin(); // 로그인 유효성 검사 및 처리
-});
-
+if (form) {
+    // 표준 addEventListener 사용
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // 기본 동작 방지
+        validateLogin(); // 로그인 유효성 검사 및 처리
+    });
+} else {
+    console.error('로그인 폼을 찾을 수 없습니다. 폼이 존재하는지 확인하세요.');
+}
