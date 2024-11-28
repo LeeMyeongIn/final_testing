@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const loginID = document.getElementById("login-loginID").value.trim();
         const password = document.getElementById("login-password").value.trim();
 
-        if (!username || !password) {
+        if (!loginID || !password) {
             event.preventDefault();
             alert("아이디와 비밀번호를 모두 입력해주세요.");
         }
