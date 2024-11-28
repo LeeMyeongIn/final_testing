@@ -7,19 +7,32 @@
     <link rel="stylesheet" href="assets/css/postDetail.css">
     <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database-compat.js"></script>
+
     <script>
-        // Firebase 초기화 설정
+        // Firebase 구성 정보
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyAHSA0O4V9vnc5E1YvQNpQTZT5z4QOWE1k",
+            authDomain: "software-89c07.firebaseapp.com",
+            databaseURL: "https://software-89c07-default-rtdb.firebaseio.com",
+            projectId: "software-89c07",
+            storageBucket: "software-89c07.firebasestorage.app",
+            messagingSenderId: "567506244346",
+            appId: "1:567506244346:web:a22bba69dd21ae59146f43",
+            measurementId: "G-KQT14W936Y"
         };
+
+        // Firebase 초기화
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+
+        // Firebase 연결 확인
+        firebase.database().ref('.info/connected').on('value', (snapshot) => {
+            if (snapshot.val() === true) {
+                console.log('Firebase에 연결되었습니다.');
+            } else {
+                console.log('Firebase 연결이 끊어졌습니다.');
+            }
+        });
     </script>
 </head>
 <body>
