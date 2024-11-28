@@ -103,19 +103,19 @@
                         const userKey = Object.keys(userData)[0];
                         if (userData[userKey].password === password) {
                             // 로그인 성공
-                            alert('로그인에 성공했습니다.');
                             localStorage.setItem('loggedIn', 'true');
                             localStorage.setItem('username', username);
                             window.location.href = 'index.html';
                         } else {
-                            alert('비밀번호가 잘못되었습니다.');
+                            alert('아이디 또는 비밀번호가 잘못되었습니다.');
                         }
                     } else {
-                        alert('아이디가 존재하지 않습니다.');
+                        alert('아이디 또는 비밀번호가 잘못되었습니다.');
                     }
                 })
                 .catch((error) => {
                     console.error("로그인 중 오류 발생:", error);
+                    alert('로그인 중 오류가 발생했습니다. 다시 시도해 주세요.');
                 });
 
             return false; // 폼의 기본 제출 동작 방지
