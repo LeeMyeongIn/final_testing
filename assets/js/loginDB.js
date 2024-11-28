@@ -50,11 +50,3 @@ document.querySelector('form').addEventListener('submit', (event) => {
     event.preventDefault();
     validateLogin();
 });
-
-// 네이버, 카카오 로그인 버튼 클릭 시 동작
-document.querySelector('.naver-login').addEventListener('click', () => {
-    alert('네이버 로그인을 준비 중입니다.');
-});
-document.querySelector('.kakao-login').addEventListener('click', () => {
-    alert('카카오 로그인을 준비 중입니다.');
-});
