@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const username = document.getElementById("login-username").value.trim();
+        const loginID = document.getElementById("login-loginID").value.trim();
         const password = document.getElementById("login-password").value.trim();
 
         // 서버로 요청 보내기 (Mock API 사용 예시)
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ loginID, password }),
             });
 
             const data = await response.json();
