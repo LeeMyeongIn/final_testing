@@ -3,8 +3,8 @@ let isUsernameChecked = false;
 let isNicknameChecked = false;
 
 function checkPasswordMatch() {
-    const password = document.getElementById('signup-password').value;
-    const confirmPassword = document.getElementById('signup-confirm-password').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
     const messageElement = document.getElementById('password-check-message');
 
     if (password === confirmPassword && password.length >= 8) {
@@ -24,12 +24,12 @@ function checkPasswordMatch() {
 }
 
 function validateSignup(event) {
-    event.preventDefault(); // 폼 기본 제출 동작 방지
+    event.preventDefault(); // 폴 기본 제출 동작 방지
 
-    const loginID = document.getElementById('signup-loginID').value;
-    const nickName = document.getElementById('signup-nickName').value;
-    const password = document.getElementById('signup-password').value;
-    const confirmPassword = document.getElementById('signup-confirm-password').value;
+    const loginID = document.getElementById('loginID').value;
+    const nickName = document.getElementById('nickName').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
 
     // 중복 검사 확인
     if (!isUsernameChecked) {
@@ -59,13 +59,13 @@ function validateSignup(event) {
 
     // 회원가입 성공
     alert("회원가입이 완료되었습니다!");
-    window.location.href = "login.html"; // 로그인 화면으로 리다이렉트
+    window.location.href = "login.html"; // 로그인 화면으로 리다이레크트
     return true;
 }
 
 function toggleSignupButton() {
-    const password = document.getElementById('signup-password').value;
-    const confirmPassword = document.getElementById('signup-confirm-password').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
     const signupButton = document.getElementById('signup-button');
 
     if (
@@ -80,17 +80,24 @@ function toggleSignupButton() {
     }
 }
 
-document.getElementById('signup-password').addEventListener('input', checkPasswordMatch);
-document.getElementById('signup-confirm-password').addEventListener('input', checkPasswordMatch);
+document.getElementById('password').addEventListener('input', checkPasswordMatch);
+document.getElementById('confirmPassword').addEventListener('input', checkPasswordMatch);
 
 // 아이디 중복 검사
 document.querySelector('.input-container button').addEventListener('click', function () {
-    const loginID = document.getElementById('signup-loginID').value;
+    const loginID = document.getElementById('loginID').value;
     if (loginID) {
-        // 중복 검사 로직 (예: 서버 호출로 확인)
-        alert("아이디 중복 확인 완료!");
-        isUsernameChecked = true;
-        toggleSignupButton();
+        const dbRef = firebase.database().ref('UserData');
+        dbRef.orderByChild('loginID').equalTo(loginID).once('value', snapshot => {
+            if (snapshot.exists()) {
+                alert("아이디가 중복되었습니다. 다른 아이디를 사용해주세요.");
+                isUsernameChecked = false;
+            } else {
+                alert("아이디 중복 확인 완료!");
+                isUsernameChecked = true;
+                toggleSignupButton();
+            }
+        });
     } else {
         alert("아이디를 입력해주세요.");
     }
@@ -98,13 +105,21 @@ document.querySelector('.input-container button').addEventListener('click', func
 
 // 닉네임 중복 검사
 document.querySelectorAll('.input-container button')[1].addEventListener('click', function () {
-    const nickname = document.getElementById('signup-nickName').value;
-    if (nicknName) {
-        // 중복 검사 로직 (예: 서버 호출로 확인)
-        alert("닉네임 중복 확인 완료!");
-        isNicknameChecked = true;
-        toggleSignupButton();
+    const nickName = document.getElementById('nickName').value;
+    if (nickName) {
+        const dbRef = firebase.database().ref('UserData');
+        dbRef.orderByChild('nickName').equalTo(nickName).once('value', snapshot => {
+            if (snapshot.exists()) {
+                alert("닉네임이 중복되었습니다. 다른 닉네임을 사용해주세요.");
+                isNicknameChecked = false;
+            } else {
+                alert("닉네임 중복 확인 완료!");
+                isNicknameChecked = true;
+                toggleSignupButton();
+            }
+        });
     } else {
         alert("닉네임을 입력해주세요.");
     }
 });
+
