@@ -97,12 +97,7 @@
     transition: transform 0.2s ease; /* 마우스 오버 효과 */
 }
 
-//.category-center img {
-//    width: 400px;
-//    height: 400px;
-//    margin-bottom: -2rem;
-//    transition: transform 0.3s ease;
-//}
+
 
 .category-center img:hover {
     transform: scale(1.1);
