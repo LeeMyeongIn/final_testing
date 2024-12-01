@@ -2,65 +2,22 @@
 let isUsernameChecked = false;
 let isNicknameChecked = false;
 
-function checkPasswordMatch() {
+function validatePasswordMatch() {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     const messageElement = document.getElementById('password-check-message');
 
-    if (password === confirmPassword && password.length >= 8) {
-        messageElement.style.color = "green";
-        messageElement.innerText = "비밀번호가 일치합니다.";
-        messageElement.style.display = "block";
+    if (password !== confirmPassword || password === '') {
+        messageElement.style.color = 'red';
+        messageElement.textContent = '비밀번호가 일치하지 않습니다.';
+        messageElement.style.display = 'block';
+        return false;
     } else {
-        messageElement.style.color = "red";
-        if (password.length < 8) {
-            messageElement.innerText = "비밀번호는 8자 이상이어야 합니다.";
-        } else {
-            messageElement.innerText = "비밀번호가 일치하지 않습니다.";
-        }
-        messageElement.style.display = "block";
+        messageElement.style.color = 'green';
+        messageElement.textContent = '비밀번호가 일치합니다.';
+        messageElement.style.display = 'block';
+        return true;
     }
-    toggleSignupButton(); // 버튼 상태 업데이트
-}
-
-function validateSignup(event) {
-    event.preventDefault(); // 폴 기본 제출 동작 방지
-
-    const loginID = document.getElementById('loginID').value;
-    const nickName = document.getElementById('nickName').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-
-    // 중복 검사 확인
-    if (!isUsernameChecked) {
-        alert("아이디 중복 검사를 진행해주세요.");
-        return false;
-    }
-    if (!isNicknameChecked) {
-        alert("닉네임 중복 검사를 진행해주세요.");
-        return false;
-    }
-
-    // 비밀번호 확인
-    if (password !== confirmPassword) {
-        alert("비밀번호가 일치하지 않습니다.");
-        return false;
-    }
-    if (password.length < 8) {
-        alert("비밀번호는 8자 이상이어야 합니다.");
-        return false;
-    }
-
-    // 모든 필드 입력 확인
-    if (!loginID || !nickName || !password || !confirmPassword) {
-        alert("모든 필드를 입력해주세요.");
-        return false;
-    }
-
-    // 회원가입 성공
-    alert("회원가입이 완료되었습니다!");
-    window.location.href = "login.html"; // 로그인 화면으로 리다이레크트
-    return true;
 }
 
 function toggleSignupButton() {
@@ -81,8 +38,8 @@ function toggleSignupButton() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('password').addEventListener('input', checkPasswordMatch);
-    document.getElementById('confirmPassword').addEventListener('input', checkPasswordMatch);
+    document.getElementById('password').addEventListener('input', validatePasswordMatch);
+    document.getElementById('confirmPassword').addEventListener('input', validatePasswordMatch);
 
     // 아이디 중복 검사
     document.querySelector('.input-container button').addEventListener('click', function () {
