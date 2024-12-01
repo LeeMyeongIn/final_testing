@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const commentContainer = document.getElementById('comments');
             commentContainer.innerHTML = '';
             comments.forEach((commentObj, index) => {
-                const { nickname, comment } = commentObj;
+                const { nickName, comment } = commentObj;
                 // 댓글 요소 추가 로직
             });
         });
