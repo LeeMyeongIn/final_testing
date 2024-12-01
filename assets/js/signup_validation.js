@@ -80,46 +80,48 @@ function toggleSignupButton() {
     }
 }
 
-document.getElementById('password').addEventListener('input', checkPasswordMatch);
-document.getElementById('confirmPassword').addEventListener('input', checkPasswordMatch);
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('password').addEventListener('input', checkPasswordMatch);
+    document.getElementById('confirmPassword').addEventListener('input', checkPasswordMatch);
 
-// 아이디 중복 검사
-document.querySelector('.input-container button').addEventListener('click', function () {
-    const loginID = document.getElementById('loginID').value;
-    if (loginID) {
-        const dbRef = firebase.database().ref('UserData');
-        dbRef.orderByChild('loginID').equalTo(loginID).once('value', snapshot => {
-            if (snapshot.exists()) {
-                alert("아이디가 중복되었습니다. 다른 아이디를 사용해주세요.");
-                isUsernameChecked = false;
-            } else {
-                alert("아이디 중복 확인 완료!");
-                isUsernameChecked = true;
-                toggleSignupButton();
-            }
-        });
-    } else {
-        alert("아이디를 입력해주세요.");
-    }
-});
+    // 아이디 중복 검사
+    document.querySelector('.input-container button').addEventListener('click', function () {
+        const loginID = document.getElementById('loginID').value;
+        if (loginID) {
+            const dbRef = firebase.database().ref('UserData');
+            dbRef.orderByChild('loginID').equalTo(loginID).once('value', snapshot => {
+                if (snapshot.exists()) {
+                    alert("아이디가 중복되었습니다. 다른 아이디를 사용해주세요.");
+                    isUsernameChecked = false;
+                } else {
+                    alert("아이디 중복 확인 완료!");
+                    isUsernameChecked = true;
+                    toggleSignupButton();
+                }
+            });
+        } else {
+            alert("아이디를 입력해주세요.");
+        }
+    });
 
-// 닉네임 중복 검사
-document.querySelectorAll('.input-container button')[1].addEventListener('click', function () {
-    const nickName = document.getElementById('nickName').value;
-    if (nickName) {
-        const dbRef = firebase.database().ref('UserData');
-        dbRef.orderByChild('nickName').equalTo(nickName).once('value', snapshot => {
-            if (snapshot.exists()) {
-                alert("닉네임이 중복되었습니다. 다른 닉네임을 사용해주세요.");
-                isNicknameChecked = false;
-            } else {
-                alert("닉네임 중복 확인 완료!");
-                isNicknameChecked = true;
-                toggleSignupButton();
-            }
-        });
-    } else {
-        alert("닉네임을 입력해주세요.");
-    }
+    // 닉네임 중복 검사
+    document.querySelectorAll('.input-container button')[1].addEventListener('click', function () {
+        const nickName = document.getElementById('nickName').value;
+        if (nickName) {
+            const dbRef = firebase.database().ref('UserData');
+            dbRef.orderByChild('nickName').equalTo(nickName).once('value', snapshot => {
+                if (snapshot.exists()) {
+                    alert("닉네임이 중복되었습니다. 다른 닉네임을 사용해주세요.");
+                    isNicknameChecked = false;
+                } else {
+                    alert("닉네임 중복 확인 완료!");
+                    isNicknameChecked = true;
+                    toggleSignupButton();
+                }
+            });
+        } else {
+            alert("닉네임을 입력해주세요.");
+        }
+    });
 });
 
