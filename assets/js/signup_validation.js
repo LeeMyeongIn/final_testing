@@ -26,8 +26,8 @@ function checkPasswordMatch() {
 function validateSignup(event) {
     event.preventDefault(); // 폼 기본 제출 동작 방지
 
-    const username = document.getElementById('signup-username').value;
-    const nickname = document.getElementById('signup-nickname').value;
+    const loginID = document.getElementById('signup-loginID').value;
+    const nickName = document.getElementById('signup-nickName').value;
     const password = document.getElementById('signup-password').value;
     const confirmPassword = document.getElementById('signup-confirm-password').value;
 
@@ -52,7 +52,7 @@ function validateSignup(event) {
     }
 
     // 모든 필드 입력 확인
-    if (!username || !nickname || !password || !confirmPassword) {
+    if (!loginID || !nickName || !password || !confirmPassword) {
         alert("모든 필드를 입력해주세요.");
         return false;
     }
@@ -85,8 +85,8 @@ document.getElementById('signup-confirm-password').addEventListener('input', che
 
 // 아이디 중복 검사
 document.querySelector('.input-container button').addEventListener('click', function () {
-    const username = document.getElementById('signup-username').value;
-    if (username) {
+    const loginID = document.getElementById('signup-loginID').value;
+    if (loginID) {
         // 중복 검사 로직 (예: 서버 호출로 확인)
         alert("아이디 중복 확인 완료!");
         isUsernameChecked = true;
@@ -98,8 +98,8 @@ document.querySelector('.input-container button').addEventListener('click', func
 
 // 닉네임 중복 검사
 document.querySelectorAll('.input-container button')[1].addEventListener('click', function () {
-    const nickname = document.getElementById('signup-nickname').value;
-    if (nickname) {
+    const nickname = document.getElementById('signup-nickName').value;
+    if (nicknName) {
         // 중복 검사 로직 (예: 서버 호출로 확인)
         alert("닉네임 중복 확인 완료!");
         isNicknameChecked = true;
